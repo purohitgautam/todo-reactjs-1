@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useProductContext } from '../context/context'
 
@@ -10,11 +10,12 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    let userIndex = JSON.parse(localStorage.getItem('userIndex') || '[]')
+    const allMembers = JSON.parse(localStorage.getItem('allMembers' || '[]'))
+    const userIndex = JSON.parse(localStorage.getItem('userIndex') || '[]')
 
     const handleLogin = e =>{
         e.preventDefault()
-        let validUser = JSON.parse(localStorage.getItem('allMembers')).some(data => data.email === email && data.password === password)
+        let validUser = JSON.parse(localStorage.getItem('allMembers') || '[]').some(data => data.email === email && data.password === password)
 
         if (!validUser) {
             return alert('invalid username or password')

@@ -4,6 +4,7 @@ export default function Tasks() {
 
     const [handleDelete, setHandleDelete] = useState(false)
     const [completed, setCompleted] = useState(false)
+    const [deleteUser, setDeleteUser] = useState(false)
 
     let allMembers = JSON.parse(localStorage.getItem('allMembers' || "[]"))
     let allUsers = allMembers.filter(i => i.member === 'user')
@@ -34,6 +35,13 @@ export default function Tasks() {
                             setHandleDelete(prev => !prev)
                         }}>x</button>
                     </div>)}
+                    <button className='deleteUser' onClick={()=>{
+                        const email = item.email
+                        const emailIndex = allMembers.findIndex(i => i.email === email)
+                        allMembers.splice(emailIndex, 1)
+                        localStorage.setItem('allMembers', JSON.stringify(allMembers))
+                        setDeleteUser(prev => !prev)
+                    }}>delete user</button>
                 </div>
             ))
         }

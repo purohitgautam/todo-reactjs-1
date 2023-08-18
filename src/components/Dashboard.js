@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useProductContext } from "../context/context";
 import Tasks from "./Tasks";
-import Logout from "./Logout";
 
 export default function Dashboard() {
-  
-    const navigate = useNavigate()
-  const {setApprender} = useProductContext()
 
   let userIndex = JSON.parse(localStorage.getItem('userIndex'))
   let user =  userIndex[userIndex.length - 1]
@@ -17,8 +11,7 @@ export default function Dashboard() {
   const [handleDelete, setHandleDelete] = useState(false)
     const data = allMembers.filter(i => i.member === 'user')
     const [task, setTask] = useState('')
-    const [users, setUsers] = useState(data[0].username)
-    const adminMember = JSON.parse(localStorage.getItem('adminMember') || '[]')
+    const [users, setUsers] = useState(data.length > 0 ? data[0].username : '')
     const admin = allMembers[userIndex].member
     console.log(admin);
 
@@ -45,7 +38,7 @@ export default function Dashboard() {
               onChange={(e) => setTask(e.target.value)}
             />
             <select value={users} onChange={(e) => setUsers(e.target.value)}>
-              {data.map((item, index) => (
+              {data.length && data.map((item, index) => (
                 <option key={index}>{item.username}</option>
               ))}
             </select>
@@ -54,7 +47,6 @@ export default function Dashboard() {
           <div>
             <Tasks />
           </div>
-          <Logout />
         </div>
       ) : (
         <div className="task-user">
@@ -101,7 +93,6 @@ export default function Dashboard() {
           ) : (
             <span>no task assign to you</span>
           )}
-          <Logout />
         </div>
       )}
     </div>
