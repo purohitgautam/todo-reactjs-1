@@ -17,13 +17,10 @@ export default function Registration() {
     const handleRegistration = (e)=>{
         e.preventDefault()
         let allMembers = JSON.parse(localStorage.getItem('allMembers') || '[]')
-        if (password !== confirmPassword){
-            return alert("Password Does Not Match")
-        } else if (allMembers.length && allMembers.some(i => i.email === email)){
-            return alert('user already exists')
-        } else if (allMembers.length && allMembers.some(i => i.username === username)){
-            return alert('username is taken, try another')
-        } else{
+        if (password !== confirmPassword) alert("Password Does Not Match")
+        else if (allMembers.length && allMembers.some(i => i.email === email)) alert('user already exists')
+        else if (allMembers.length && allMembers.some(i => i.username === username)) alert('username is taken, try another')
+        else{
             let me = {
                 'username': username,
                 'firstname': firstname,

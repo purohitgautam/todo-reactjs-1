@@ -7,8 +7,7 @@ export default function Dashboard() {
   let user =  userIndex[userIndex.length - 1]
 
   let allMembers = JSON.parse(localStorage.getItem('allMembers') || '[]')
-  const [completed, setCompleted] = useState(false)
-  const [handleDelete, setHandleDelete] = useState(false)
+  const [renderDashboard, setRenderDashboard] = useState(false)
     const data = allMembers.filter(i => i.member === 'user')
     const [task, setTask] = useState('')
     const [users, setUsers] = useState(data.length > 0 ? data[0].username : '')
@@ -66,7 +65,7 @@ export default function Dashboard() {
                       "allMembers",
                       JSON.stringify(allMembers)
                     );
-                    setCompleted((prev) => !prev);
+                    setRenderDashboard((prev) => !prev);
                   }}
                   style={
                     item.status === "completed"
@@ -83,7 +82,7 @@ export default function Dashboard() {
                       "allMembers",
                       JSON.stringify(allMembers)
                     );
-                    setHandleDelete((prev) => !prev);
+                    setRenderDashboard((prev) => !prev);
                   }}
                 >
                   x

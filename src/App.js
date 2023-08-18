@@ -14,11 +14,9 @@ function App() {
 
   const{ setApprender } = useProductContext()
   useEffect(()=>{
-    console.log('hello');
   },[setApprender])
 
   const userIndex = JSON.parse(localStorage.getItem('userIndex') || '[]')
-  console.log(userIndex);
 
   return (
     <div className="App">

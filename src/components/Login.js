@@ -10,7 +10,6 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const allMembers = JSON.parse(localStorage.getItem('allMembers' || '[]'))
     const userIndex = JSON.parse(localStorage.getItem('userIndex') || '[]')
 
     const handleLogin = e =>{

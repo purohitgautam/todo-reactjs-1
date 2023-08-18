@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 
 export default function Tasks() {
 
-    const [handleDelete, setHandleDelete] = useState(false)
-    const [completed, setCompleted] = useState(false)
-    const [deleteUser, setDeleteUser] = useState(false)
+    const [renderTasks, setRenderTasks] = useState(false)
 
     let allMembers = JSON.parse(localStorage.getItem('allMembers' || "[]"))
     let allUsers = allMembers.filter(i => i.member === 'user')
@@ -25,14 +23,14 @@ export default function Tasks() {
                             }
 
                             localStorage.setItem('allMembers', JSON.stringify(allMembers))
-                            setCompleted(prev => !prev)
+                            setRenderTasks(prev => !prev)
                          }}
                          style={allUsers[index].tasks[i].status === 'completed' ? {textDecoration: 'line-through'} : {}}
                         >{value.task}</span>
                         <button onClick={()=>{
                             allUsers[index].tasks.splice(i, 1)
                             localStorage.setItem('allMembers', JSON.stringify(allMembers))
-                            setHandleDelete(prev => !prev)
+                            setRenderTasks(prev => !prev)
                         }}>x</button>
                     </div>)}
                     <button className='deleteUser' onClick={()=>{
@@ -40,7 +38,7 @@ export default function Tasks() {
                         const emailIndex = allMembers.findIndex(i => i.email === email)
                         allMembers.splice(emailIndex, 1)
                         localStorage.setItem('allMembers', JSON.stringify(allMembers))
-                        setDeleteUser(prev => !prev)
+                        setRenderTasks(prev => !prev)
                     }}>delete user</button>
                 </div>
             ))
