@@ -1,21 +1,31 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useProductContext } from '../context/context'
 
 export default function Navbar() {
-    const navLists = ['Home', 'login', 'admin', "user"]
+  
+  const {setApprender} = useProductContext()
+  const navigate = useNavigate()
+  const userIndex = JSON.parse(localStorage.getItem('userIndex') || '[]')
+  const handleLogout = ()=>{
+    userIndex.splice(0);
+    localStorage.setItem("userIndex", JSON.stringify(userIndex));
+    setApprender((prev) => !prev);
+    return navigate("/login")
+  }
+
   return (
     <div className='navbar'>
       <span>Todo.app</span>
       <div className="nav-items">
           <ul>
-            {navLists.map((navlist, index) => {
-              return <NavLink 
-                 to={navlist === 'Home' ? '/' : `/${navlist.toLowerCase()}`}
-                 key={index}  style={({isActive}) => ({color: isActive ? 'rgb(1 173 255)' : 'black', textDecoration: 'none'})}
-                 className={'navlinks'} >
-                  {navlist}
-                </NavLink>
-          })}
+              <NavLink className={'navlinks'} style={({isActive}) => ({color: isActive ? 'rgb(1 173 255)' : 'black', textDecoration: 'none'})} to={'/'}>Home</NavLink>
+              <NavLink className={'navlinks'} style={({isActive}) => ({color: isActive ? 'rgb(1 173 255)' : 'black', textDecoration: 'none'})} to={'/dashboard'}>Dashboard</NavLink>
+              {
+              userIndex.length > 0 ?
+               <button className='logout' onClick={handleLogout}>Logout</button> : 
+                <NavLink className={'navlinks'} style={({isActive}) => ({color: isActive ? 'rgb(1 173 255)' : 'black', textDecoration: 'none'})} to={'/login'}>Login</NavLink>
+              }
           </ul>
       </div>
     </div>

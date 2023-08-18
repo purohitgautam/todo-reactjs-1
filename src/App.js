@@ -3,11 +3,12 @@ import React, { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Registration from './components/Registration';
 import Login from './components/Login';
-import Admin from './components/Admin';
-import User from './components/User';
 import Invalid from './components/Invalid';
 import Navbar from './components/Navbar';
 import { useProductContext } from './context/context';
+import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './components/Dashboard';
+import Home from './components/Home';
 
 function App() {
 
@@ -16,19 +17,20 @@ function App() {
     console.log('hello');
   },[setApprender])
 
-  const userIndex = JSON.parse(localStorage.getItem('userIndex'))
-  const adminMember = JSON.parse(localStorage.getItem('adminMember') || '[]')
-  console.log(userIndex, adminMember);
+  const userIndex = JSON.parse(localStorage.getItem('userIndex') || '[]')
+  console.log(userIndex);
 
   return (
     <div className="App">
       <Router>
       <Navbar />
         <Routes>
-          <Route path='/' element={<Registration />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/registration' element={<Registration />} />
           <Route path='/login' element={<Login />} />
-          {adminMember.length > 0 && <Route path='/admin' element={<Admin />} />}
-          {userIndex.length > 0 && <Route path='/user' element={<User />} />}
+          <Route element={<ProtectedRoute userIndex={userIndex} />}>
+            <Route path='/dashboard' element={<Dashboard />} />
+          </Route>
           <Route path='*' element={<Invalid />} />
         </Routes>
       </Router>
